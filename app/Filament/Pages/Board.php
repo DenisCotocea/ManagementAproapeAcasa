@@ -43,6 +43,11 @@ class Board extends Page implements HasForms
         return __('Management');
     }
 
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected function getFormSchema(): array
     {
         return [

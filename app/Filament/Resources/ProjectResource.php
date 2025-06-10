@@ -227,7 +227,20 @@ class ProjectResource extends Resource
                         Filament::notify('success', __('Project updated'));
                     }),
 
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make('kanban')
+                    ->label(
+                        fn ($record)
+                        => ($record->type === 'scrum' ? __('Scrum board') : __('Kanban board'))
+                    )
+                    ->icon('heroicon-o-view-boards')
+                    ->color('secondary')
+                    ->url(function ($record) {
+                        if ($record->type === 'scrum') {
+                            return route('filament.pages.scrum/{project}', ['project' => $record->id]);
+                        } else {
+                            return route('filament.pages.kanban/{project}', ['project' => $record->id]);
+                        }
+                    }),
                 Tables\Actions\EditAction::make(),
 
                 Tables\Actions\ActionGroup::make([
@@ -241,21 +254,6 @@ class ProjectResource extends Resource
                             \Maatwebsite\Excel\Excel::CSV,
                             ['Content-Type' => 'text/csv']
                         )),
-
-                    Tables\Actions\Action::make('kanban')
-                        ->label(
-                            fn ($record)
-                                => ($record->type === 'scrum' ? __('Scrum board') : __('Kanban board'))
-                        )
-                        ->icon('heroicon-o-view-boards')
-                        ->color('secondary')
-                        ->url(function ($record) {
-                            if ($record->type === 'scrum') {
-                                return route('filament.pages.scrum/{project}', ['project' => $record->id]);
-                            } else {
-                                return route('filament.pages.kanban/{project}', ['project' => $record->id]);
-                            }
-                        }),
                 ])->color('secondary'),
             ])
             ->bulkActions([

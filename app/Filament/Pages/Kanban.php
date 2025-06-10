@@ -53,7 +53,15 @@ class Kanban extends Page implements HasForms
                 ->action(function () {
                     $this->getRecords();
                     Filament::notify('success', __('Kanban board updated'));
-                })
+                }),
+
+            Action::make('createTicket')
+                ->button()
+                ->label(__('Create Ticket'))
+                ->color('primary')
+                ->action(function () {
+                    $this->createTicket();
+                }),
         ];
     }
 

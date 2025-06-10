@@ -40,10 +40,13 @@
                         handle: '.handle',
                         animation: 100,
                         onEnd: function (evt) {
+                            const container = evt.to;
+                            const orderedIds = [...container.querySelectorAll('.kanban-record')].map(el => +el.dataset.id);
+
                             Livewire.emit('recordUpdated',
                                 +evt.clone.dataset.id, // id
-                                +evt.newIndex, // newIndex
                                 +evt.to.dataset.status, // newStatus
+                                orderedIds,
                             );
                         },
                     })

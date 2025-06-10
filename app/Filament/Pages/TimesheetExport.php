@@ -33,6 +33,11 @@ class TimesheetExport extends Page implements HasForms
         $this->form->fill();
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected function getFormSchema(): array
     {
         return [

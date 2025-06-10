@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\AllTickets;
 use App\Filament\Widgets\FavoriteProjects;
 use App\Filament\Widgets\LatestActivities;
 use App\Filament\Widgets\LatestComments;
@@ -25,15 +26,16 @@ class Dashboard extends BasePage
     protected function getWidgets(): array
     {
         return [
+            AllTickets::class,
             FavoriteProjects::class,
             LatestActivities::class,
             LatestComments::class,
             LatestProjects::class,
             LatestTickets::class,
             TicketsByPriority::class,
-            TicketsByType::class,
-            TicketTimeLogged::class,
-            UserTimeLogged::class
+//            TicketsByType::class,
+//            TicketTimeLogged::class,
+//            UserTimeLogged::class
         ];
     }
 }

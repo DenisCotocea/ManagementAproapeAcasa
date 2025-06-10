@@ -137,6 +137,7 @@ trait KanbanScrumHelper
                         });
                 });
         });
+        $query->orderBy('order');
         return $query->get()
             ->map(fn(Ticket $item) => [
                 'id' => $item->id,
@@ -154,13 +155,17 @@ trait KanbanScrumHelper
             ]);
     }
 
-    public function recordUpdated(int $record, int $newIndex, int $newStatus): void
+    public function recordUpdated(int $record, int $newStatus, array $orderedIds): void
     {
         $ticket = Ticket::find($record);
         if ($ticket) {
-            $ticket->order = $newIndex;
             $ticket->status_id = $newStatus;
             $ticket->save();
+            foreach ($orderedIds as $index => $ticketId) {
+                $orderTicket = \App\Models\Ticket::where('id', $ticketId)->update([
+                    'order' => $index,
+                ]);
+            }
             Filament::notify('success', __('Ticket updated'));
         }
     }

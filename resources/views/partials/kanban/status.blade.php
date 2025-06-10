@@ -13,8 +13,7 @@
         @foreach($this->getRecords()->where('status', $status['id']) as $record)
             @include('partials.kanban.record')
         @endforeach
-
-        <!-- href="{{ route('filament.resources.tickets.create', ['project' => request()->get('project')]) }}" -->
+        <!-- href="{{ route('filament.resources.tickets.create', ['project' => $project->id]) }}" -->
         @if($status['add_ticket'])
             <a class="create-record hover:cursor-pointer"
                wire:click="createTicket"
@@ -30,7 +29,7 @@
                             {{ __('Create ticket') }}
                         </div>
                         <div class="dialog-content">
-                            @livewire('road-map.issue-form', ['project' => null])
+                            @livewire('road-map.issue-form', ['project' => $project])
                         </div>
                     </div>
                 </div>

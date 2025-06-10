@@ -19,6 +19,11 @@ class ActivityResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static function getNavigationLabel(): string
     {
         return __('Activities');

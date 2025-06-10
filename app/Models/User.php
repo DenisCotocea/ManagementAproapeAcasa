@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JeffGreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
+use Spatie\GoogleCalendar\GoogleCalendarFactory;
 use Laravel\Sanctum\HasApiTokens;
 use ProtoneMedia\LaravelVerifyNewEmail\MustVerifyNewEmail;
 use Ramsey\Uuid\Uuid;
@@ -125,5 +126,27 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     public function canAccessFilament(): bool
     {
         return true;
+    }
+
+    public function getGoogleCalendarToken()
+    {
+        return $this->google_calendar_token ? json_decode($this->google_calendar_token, true) : null;
+    }
+
+    public function setGoogleCalendarToken(array $token)
+    {
+        $this->google_calendar_token = json_encode($token);
+        $this->save();
+    }
+
+    public function getGoogleCalendarService()
+    {
+        $token = $this->getGoogleCalendarToken();
+
+        if (!$token) {
+            return null;
+        }
+
+        return GoogleCalendarFactory::createForCalendarId('primary', $token);
     }
 }

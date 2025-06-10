@@ -6,11 +6,17 @@ use Illuminate\Support\Facades\Route;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use App\Http\Controllers\RoadMap\DataController;
 use App\Http\Controllers\Auth\OidcAuthController;
+use App\Http\Controllers\GoogleCalendarController;
 
 // Share ticket
 Route::get('/tickets/share/{ticket:code}', function (Ticket $ticket) {
     return redirect()->to(route('filament.resources.tickets.view', $ticket));
 })->name('filament.resources.tickets.share');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/google-calendar/connect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.calendar.connect');
+    Route::get('/google-calendar/callback', [GoogleCalendarController::class, 'handleGoogleCallback'])->name('google.calendar.callback');
+});
 
 // Validate an account
 Route::get('/validate-account/{user:creation_token}', function (User $user) {

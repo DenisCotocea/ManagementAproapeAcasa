@@ -40,7 +40,7 @@ class TimesheetResource extends Resource
 
     protected static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->can('List timesheet data');
+        return false;
     }
 
     public static function form(Form $form): Form

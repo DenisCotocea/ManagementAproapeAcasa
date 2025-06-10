@@ -35,6 +35,11 @@ class RoleResource extends Resource
         return __('Permissions');
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -34,6 +34,11 @@ class TicketResource extends Resource
         return __('Tickets');
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function getPluralLabel(): ?string
     {
         return static::getNavigationLabel();
@@ -176,7 +181,7 @@ class TicketResource extends Resource
 
                         Forms\Components\RichEditor::make('content')
                             ->label(__('Ticket content'))
-                            ->required()
+                            ->nullable()
                             ->columnSpan(2),
 
                         Forms\Components\Grid::make()
@@ -204,6 +209,7 @@ class TicketResource extends Resource
                             ->collapsible()
                             ->collapsed()
                             ->orderable()
+                            ->nullable()
                             ->defaultItems(0)
                             ->schema([
                                 Forms\Components\Grid::make()

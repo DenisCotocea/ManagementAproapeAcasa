@@ -73,7 +73,7 @@ class IssueForm extends Component implements HasForms
                                 ->label(__('Project'))
                                 ->searchable()
                                 ->reactive()
-                                ->disabled($this->project != null)
+                                ->default($this->project->id)
                                 ->columnSpan(2)
                                 ->options(fn() => Project::where('owner_id', auth()->user()->id)
                                     ->orWhereHas('users', function ($query) {
@@ -140,11 +140,8 @@ class IssueForm extends Component implements HasForms
                                 })
                                 ->required(),
 
-                            Forms\Components\Select::make('type_id')
-                                ->label(__('Ticket type'))
-                                ->searchable()
-                                ->options(fn() => TicketType::all()->pluck('name', 'id')->toArray())
-                                ->required(),
+                            Forms\Components\Hidden::make('type_id')
+                                ->default(1),
 
                             Forms\Components\Select::make('priority_id')
                                 ->label(__('Ticket priority'))
@@ -156,7 +153,7 @@ class IssueForm extends Component implements HasForms
 
             Forms\Components\RichEditor::make('content')
                 ->label(__('Ticket content'))
-                ->required()
+                ->nullable()
                 ->columnSpan(2),
 
             Forms\Components\Grid::make()

@@ -29,6 +29,11 @@ class RoadMap extends Page implements HasForms
 
     public bool $ticket = false;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected $listeners = [
         'closeEpicDialog' => 'closeDialog',
         'closeTicketDialog' => 'closeDialog',

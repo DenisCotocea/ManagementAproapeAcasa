@@ -32,7 +32,7 @@ class TimesheetDashboard extends Page
 
     protected static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->can('View timesheet dashboard');
+        return false;
     }
 
     protected function getWidgets(): array
